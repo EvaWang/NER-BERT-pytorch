@@ -4,7 +4,7 @@
 
     "learning_rate": 3e-5,
     "weight_decay": 0.01,
-    "clip_grad": 2,
+    "clip_grad": 1,
 
     "batch_size": 30,
     "epoch_num": 20,
