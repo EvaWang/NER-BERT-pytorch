@@ -196,20 +196,21 @@ if __name__ == '__main__':
         param_optimizer = list(model.classifier.named_parameters()) 
         optimizer_grouped_parameters = [{'params': [p for n, p in param_optimizer]}]
     if args.fp16:
-        try:
-            from apex.optimizers import FP16_Optimizer
-            from apex.optimizers import FusedAdam
-        except ImportError:
-            raise ImportError("lease install apex from https://www.github.com/nvidia/apex to use fp16 training.")
-        optimizer = FusedAdam(optimizer_grouped_parameters,
-                              lr=params.learning_rate,
-                              bias_correction=False,
-                              max_grad_norm=1.0)
-        scheduler = LambdaLR(optimizer, lr_lambda=lambda epoch: 1/(1 + 0.05*epoch))
-        if args.loss_scale == 0:
-            optimizer = FP16_Optimizer(optimizer, dynamic_loss_scale=True)
-        else:
-            optimizer = FP16_Optimizer(optimizer, static_loss_scale=args.loss_scale)
+        # try:
+        #     from apex.optimizers import FP16_Optimizer
+        #     from apex.optimizers import FusedAdam
+        # except ImportError:
+        #     raise ImportError("lease install apex from https://www.github.com/nvidia/apex to use fp16 training.")
+        # optimizer = FusedAdam(optimizer_grouped_parameters,
+        #                       lr=params.learning_rate,
+        #                       bias_correction=False,
+        #                       max_grad_norm=1.0)
+        # scheduler = LambdaLR(optimizer, lr_lambda=lambda epoch: 1/(1 + 0.05*epoch))
+        # if args.loss_scale == 0:
+        #     optimizer = FP16_Optimizer(optimizer, dynamic_loss_scale=True)
+        # else:
+        #     optimizer = FP16_Optimizer(optimizer, static_loss_scale=args.loss_scale)
+        pass
     else:
         optimizer = Adam(optimizer_grouped_parameters, lr=params.learning_rate)
         scheduler = LambdaLR(optimizer, lr_lambda=lambda epoch: 1/(1 + 0.05*epoch))
